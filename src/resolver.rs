@@ -20,7 +20,7 @@ where
 
 pub trait Day {
     fn get_input(&self, file_name: &str) -> String {
-        let mut input_file = String::from("../inputs/");
+        let mut input_file = String::from("inputs/");
         input_file.push_str(file_name);
         fs::read_to_string(input_file).expect("No correct input file")
     }
