@@ -23,14 +23,24 @@ fn get_result(me: char, op: char) -> i64 {
     let op_val = shape_select(op);
 
     if op_val == val {
-        println!("draw");
         3 + val
     } else if (val == 2 && op_val == 1) || (val == 1 && op_val == 3) || (val == 3 && op_val == 2) {
-        println!("win");
         6 + val 
     } else {
-        println!("lost");
         0 + val
+    }
+}
+
+fn solution_2(me: char, op: char) -> i64 {
+    let op_val = shape_select(op);
+    let state = shape_select(me);
+
+    if state == 1 {
+       0 + if op_val != 1 { (op_val - 1) % 4 } else { 3 } 
+    } else if state == 2 {
+       3 + op_val
+    } else {
+       6 + if op_val != 3 { (op_val + 1) % 4} else { 1 }
     }
 }
 
@@ -38,7 +48,6 @@ impl Day for Day2 {
     fn solve(&self) -> String {
         let input =  self.get_input("input2");
         let mut play: Vec<&str> = input.split("\n").collect();
-        println!("playlen: {}", play.len());
         play.remove(play.len()-1);
 
         let mut total_score: i64 = 0;
@@ -50,8 +59,7 @@ impl Day for Day2 {
                                     .filter(|word| !word.is_empty())
                                     .map(| c | c.chars().next().unwrap()).collect::<Vec<char>>();     
 
-           println!("me {} enemy {}", shapes[1], shapes[0]);
-           total_score += get_result(shapes[1], shapes[0]);
+           total_score += solution_2(shapes[1], shapes[0]);
         }
 
         total_score.to_string()
