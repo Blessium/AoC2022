@@ -10,7 +10,7 @@ impl Day1 {
 
 impl Day for Day1 {
     fn solve(&self) -> String {
-        let input =  self.get_input("input1");
+        let input = self.get_input("input1");
         let lines: Vec<&str> = input.split("\n").collect();
         let mut sums: Vec<i64> = Vec::new();
         let mut sum = 0;
@@ -19,8 +19,8 @@ impl Day for Day1 {
             if let Ok(value) = number.parse::<i64>() {
                 sum += value;
             } else {
-               sums.push(sum); 
-               sum = 0;
+                sums.push(sum);
+                sum = 0;
             }
         }
 
