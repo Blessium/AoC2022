@@ -40,7 +40,8 @@ fn solution_1(first: &str, second: &str) -> bool {
 fn solution_2(first: &str, second: &str) -> bool {
     let first_range = get_range_from_element(first);
     let second_range = get_range_from_element(second);
-    first_range.has_common_elements_with(&second_range) || second_range.has_common_elements_with(&first_range)
+    first_range.has_common_elements_with(&second_range)
+        || second_range.has_common_elements_with(&first_range)
 }
 
 impl Day for Day4 {
