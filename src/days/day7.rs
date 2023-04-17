@@ -97,12 +97,10 @@ impl DirectoryTree {
 
     }
 
-    fn get_solution_1(&mut self, depth: &mut usize) -> usize {
+    fn get_solution_1(&mut self) -> usize {
         let mut sum = 0;
-        let mut new_depth = *depth + 1;
-
         for subdir in self.subdir.clone().into_iter() {
-                sum += subdir.borrow_mut().get_solution_1(&mut new_depth);
+                sum += subdir.borrow_mut().get_solution_1();
         }
 
         let result = self.dirsize + sum;
@@ -111,6 +109,23 @@ impl DirectoryTree {
             return sum; 
         } else {
             return result;
+        }
+    }
+
+    fn get_solution_2(&mut self, space_necessary: usize, prev_dir: usize) -> usize{
+        if (self.dirsize >= space_necessary) && (prev_dir > self.dirsize) {
+            return self.dirsize;
+        } else {
+            let mut min = prev_dir;
+            for subdir in self.subdir.clone().into_iter() {
+                let new_min = subdir.borrow_mut().get_solution_2(space_necessary, min);  
+                if new_min < min {
+                    min = new_min;
+                } else {
+                    continue;
+                }
+            }
+            min
         }
     }
 }
@@ -195,8 +210,10 @@ fn solution_1(lines: std::str::Lines) -> String {
     }
     let x = DirectoryTree::go_to_root(dir_tree);
     let mut x = x.borrow_mut();
-    let mut n: usize = 0;
-    x.get_solution_1(&mut n).to_string()
+    let n = x.dirsize;
+    let space_available = 70_000_000 - n;
+    let gap = 30_000_000 - space_available;
+    x.get_solution_2(gap, n).to_string()
 }
 
 impl Day for Day7 {
