@@ -94,31 +94,30 @@ impl DirectoryTree {
             }
             current_dir = temp;
         }
-
     }
 
     fn get_solution_1(&mut self) -> usize {
         let mut sum = 0;
         for subdir in self.subdir.clone().into_iter() {
-                sum += subdir.borrow_mut().get_solution_1();
+            sum += subdir.borrow_mut().get_solution_1();
         }
 
         let result = self.dirsize + sum;
 
         if self.dirsize > 100000 {
-            return sum; 
+            return sum;
         } else {
             return result;
         }
     }
 
-    fn get_solution_2(&mut self, space_necessary: usize, prev_dir: usize) -> usize{
+    fn get_solution_2(&mut self, space_necessary: usize, prev_dir: usize) -> usize {
         if (self.dirsize >= space_necessary) && (prev_dir > self.dirsize) {
             return self.dirsize;
         } else {
             let mut min = prev_dir;
             for subdir in self.subdir.clone().into_iter() {
-                let new_min = subdir.borrow_mut().get_solution_2(space_necessary, min);  
+                let new_min = subdir.borrow_mut().get_solution_2(space_necessary, min);
                 if new_min < min {
                     min = new_min;
                 } else {

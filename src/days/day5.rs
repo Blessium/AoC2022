@@ -75,7 +75,7 @@ fn get_command(line: &str) -> Command {
 
 pub fn solution_facade<P>(lines: std::str::Lines, mut predicate: P) -> String
 where
-    P: FnMut(Vec<String>) -> Vec<String>
+    P: FnMut(Vec<String>) -> Vec<String>,
 {
     let mut index: usize = 0;
     let table_values: Vec<&str> = lines
