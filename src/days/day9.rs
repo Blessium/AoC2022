@@ -17,7 +17,10 @@ struct Position {
 
 impl Position {
     pub fn get_diff(&self, other: &Position) -> Position {
-        Position { x: (self.x - other.x), y: (self.y - other.y)}
+        Position {
+            x: (self.x - other.x),
+            y: (self.y - other.y),
+        }
     }
 }
 
@@ -34,7 +37,7 @@ impl RopeSimulation {
             known_pos: HashSet::new(),
             curr_tail: Position { x: 0, y: 0 },
             curr_head: Position { x: 0, y: 0 },
-            snake: vec![Position { x: 0, y: 0}; 10],
+            snake: vec![Position { x: 0, y: 0 }; 10],
         }
     }
 
@@ -56,7 +59,7 @@ impl RopeSimulation {
             } else if ydiff == 0 && xdiff.abs() > 1 {
                 self.curr_tail.x += xdiff.signum();
             } else if xdiff.abs() > 1 || ydiff.abs() > 1 {
-                self.curr_tail.x += xdiff.signum(); 
+                self.curr_tail.x += xdiff.signum();
                 self.curr_tail.y += ydiff.signum();
             }
 
@@ -76,17 +79,16 @@ impl RopeSimulation {
 
             for i in 1..10 {
                 let xdiff = self.snake[i - 1].x - self.snake[i].x;
-                let ydiff = self.snake[i-1].y - self.snake[i].y;
+                let ydiff = self.snake[i - 1].y - self.snake[i].y;
 
                 if xdiff == 0 && ydiff.abs() > 1 {
                     self.snake[i].y += ydiff.signum();
                 } else if ydiff == 0 && xdiff.abs() > 1 {
                     self.snake[i].x += xdiff.signum();
                 } else if xdiff.abs() > 1 || ydiff.abs() > 1 {
-                    self.snake[i].x += xdiff.signum(); 
+                    self.snake[i].x += xdiff.signum();
                     self.snake[i].y += ydiff.signum();
                 }
-
             }
             self.known_pos.insert(self.snake[9]);
         }
@@ -95,7 +97,6 @@ impl RopeSimulation {
     pub fn get_result(&self) -> usize {
         self.known_pos.len()
     }
-
 }
 
 pub fn solution_1(lines: std::str::Lines) -> String {

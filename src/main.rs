@@ -4,5 +4,5 @@ pub mod days;
 pub mod resolver;
 
 fn main() {
-    Resolver::new(days::day9::Day9::new()).get_output();
+    Resolver::new(days::day10::Day10::new()).get_output();
 }
