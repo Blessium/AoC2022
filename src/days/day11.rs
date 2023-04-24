@@ -120,7 +120,7 @@ impl Monkey {
 
     pub fn get_div(&self) -> usize {
         self.test_div
-    } 
+    }
 
     pub fn inspect_item(&mut self, com: Option<usize>) -> Option<Inspection> {
         self.items.reverse();
@@ -188,14 +188,14 @@ impl Game {
     }
 
     pub fn get_monkey_business(&self) -> usize {
-       let mut priority = BinaryHeap::new(); 
-       for monkey in self.monkeys.iter() {
+        let mut priority = BinaryHeap::new();
+        for monkey in self.monkeys.iter() {
             priority.push(monkey.get_count());
         }
-        
-       let mut result = priority.pop().unwrap();
-       result *= priority.pop().unwrap();
-       result
+
+        let mut result = priority.pop().unwrap();
+        result *= priority.pop().unwrap();
+        result
     }
 
     pub fn common_multiple(&self) -> usize {
