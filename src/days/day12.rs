@@ -1,7 +1,7 @@
 use crate::resolver::Day;
+use core::cmp::Reverse;
 use std::collections::binary_heap::BinaryHeap;
 use std::collections::HashSet;
-use core::cmp::Reverse;
 
 pub struct Day12;
 
@@ -150,7 +150,7 @@ pub fn solution2(lines: std::str::Lines) {
                     } else if *x == 'E' {
                         target = Position::new(index as isize, *j as isize);
                     } else if *x == 'a' {
-                       targets.push(Position::new(index as isize, *j as isize)); 
+                        targets.push(Position::new(index as isize, *j as isize));
                     }
                 })
                 .map(|(_, x)| if x == 'E' { '{' as usize } else { x as usize })
