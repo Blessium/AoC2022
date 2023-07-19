@@ -1,7 +1,0 @@
-first second
- -1     -1     -> next, next 
- -1      N     -> next, to_list
-  N     -1     -> to_list, next
-  N      N     -> normal
- -2     -2     -> prev, prev
- -2     -1     -> prev, next
