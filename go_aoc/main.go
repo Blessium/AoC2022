@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	day := days.Day13{}
+	day := days.Day14{}
 	f := "./inputs/" + day.GetFilename()
 
 	file_name := f + "_test.txt"
