@@ -1,6 +1,7 @@
 package days
 
 import (
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -16,9 +17,9 @@ const (
 )
 
 const (
-    Correct Result = iota
-    Continue
-    Wrong
+	Correct Result = iota
+	Continue
+	Wrong
 )
 
 type Day13 struct {
@@ -137,14 +138,14 @@ func evaluateState(l int, r int) State {
 func GetDiff(l *Signal, r *Signal) Result {
 
 	l_left := 0
-    r_left := 0
+	r_left := 0
 
 	for i, j := 0, 0; i < len(l.values) && j < len(r.values); i, j = i+1, j+1 {
 		switch evaluateState(l.values[i], r.values[j]) {
 		case BothList:
 			{
-                result := GetDiff(l.next[i], r.next[j]) 
-				if result  != Continue {
+				result := GetDiff(l.next[i], r.next[j])
+				if result != Continue {
 					return result
 				}
 			}
@@ -154,8 +155,8 @@ func GetDiff(l *Signal, r *Signal) Result {
 				signal := &Signal{
 					values: values,
 				}
-                result := GetDiff(signal, r.next[j]) 
-				if result  != Continue {
+				result := GetDiff(signal, r.next[j])
+				if result != Continue {
 					return result
 				}
 			}
@@ -166,8 +167,8 @@ func GetDiff(l *Signal, r *Signal) Result {
 				signal := &Signal{
 					values: values,
 				}
-                result := GetDiff(l.next[i], signal)
-				if result  != Continue {
+				result := GetDiff(l.next[i], signal)
+				if result != Continue {
 					return result
 				}
 			}
@@ -176,24 +177,24 @@ func GetDiff(l *Signal, r *Signal) Result {
 				if l.values[i] < r.values[j] {
 					return Correct
 				} else if l.values[i] > r.values[j] {
-                    return Wrong
-                }
+					return Wrong
+				}
 			}
 		}
 
-        l_left = i
-        r_left = j
+		l_left = i
+		r_left = j
 	}
 
-    diff_l := len(l.values) - l_left
-    diff_r := len(r.values) - r_left
-    if diff_l > diff_r {
-        return Wrong
-    } else if diff_r > diff_l {
-        return Correct 
-    } else {
-        return Continue
-    }
+	diff_l := len(l.values) - l_left
+	diff_r := len(r.values) - r_left
+	if diff_l > diff_r {
+		return Wrong
+	} else if diff_r > diff_l {
+		return Correct
+	} else {
+		return Continue
+	}
 }
 
 func (d Day13) GetFilename() string {
@@ -201,22 +202,49 @@ func (d Day13) GetFilename() string {
 }
 
 func (d Day13) Solution1(input string) string {
-    values := strings.Split(input, "\n")
-    index := 1
-    result := 0
-    for i := 0; i < len(values); i += 3 {
-        line := strings.Split(input, "\n")[i]
-        line_2 := strings.Split(input, "\n")[i+1]
-        signal := NewSignal(line)
-        signal_2 := NewSignal(line_2)
-        if GetDiff(signal, signal_2) == Correct {
-            result += index
-        }
-        index += 1
-    }
-    return strconv.Itoa(result)
+	values := strings.Split(input, "\n")
+	index := 1
+	result := 0
+	for i := 0; i < len(values); i += 3 {
+		line := strings.Split(input, "\n")[i]
+		line_2 := strings.Split(input, "\n")[i+1]
+		signal := NewSignal(line)
+		signal_2 := NewSignal(line_2)
+		if GetDiff(signal, signal_2) == Correct {
+			result += index
+		}
+		index += 1
+	}
+	return strconv.Itoa(result)
 }
 
 func (d Day13) Solution2(input string) string {
-	return ""
+	signals := []*Signal{}
+	values := strings.Split(input, "\n")
+	for _, value := range values {
+		if value == "" {
+			continue
+		}
+		signals = append(signals, NewSignal(value))
+	}
+
+	div1 := NewSignal("[[6]]")
+	div2 := NewSignal("[[2]]")
+
+	signals = append(signals, div1)
+	signals = append(signals, div2)
+
+	sort.Slice(signals, func(i, j int) bool {
+		return GetDiff(signals[i], signals[j]) == Correct
+	})
+
+	result := 1
+	for i, signal := range signals {
+		index := i + 1
+		if (GetDiff(signal, div1) == Continue) || (GetDiff(signal, div2) == Continue) {
+			result *= index
+		}
+	}
+
+	return strconv.Itoa(result)
 }

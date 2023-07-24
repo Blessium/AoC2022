@@ -16,7 +16,9 @@ func main() {
 		panic(err.Error())
 	}
 	sol := day.Solution1(content)
-	fmt.Printf("Solution test: %s\n", sol)
+	fmt.Printf("Solution test on solution 1: %s\n", sol)
+	sol = day.Solution2(content)
+	fmt.Printf("Solution test on solution 2: %s\n", sol)
 
 	file_name = f + "_1.txt"
 	content, err = getFileContent(file_name)
@@ -33,7 +35,7 @@ func main() {
 		if err == nil {
 			sol = day.Solution2(content)
 			fmt.Printf("Solution 2: %s\n", sol)
-            return
+			return
 		}
 	}
 }
