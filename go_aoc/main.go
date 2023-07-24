@@ -10,12 +10,20 @@ func main() {
 	day := days.Day13{}
 	f := "./inputs/" + day.GetFilename()
 
-	file_name := f + "_1.txt"
+	file_name := f + "_test.txt"
 	content, err := getFileContent(file_name)
 	if err != nil {
 		panic(err.Error())
 	}
 	sol := day.Solution1(content)
+	fmt.Printf("Solution test: %s\n", sol)
+
+	file_name = f + "_1.txt"
+	content, err = getFileContent(file_name)
+	if err != nil {
+		panic(err.Error())
+	}
+	sol = day.Solution1(content)
 	fmt.Printf("Solution 1: %s\n", sol)
 
 	next := f + "_2.txt"
